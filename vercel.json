@@ -1,5 +1,7 @@
 {
   "headers": [
-    { "source": "/assets/(.*).vcf", "headers": [{ "key": "Content-Type", "value": "text/vcard; charset=utf-8" }] }
+    { "source": "/assets/(.*).vcf", "headers": [{ "key": "Content-Type", "value": "text/vcard; charset=utf-8" }] },
+    { "source": "/assets/jaideep-gaandhie.vcf", "headers": [{ "key": "Content-Disposition", "value": "inline; filename=\"Jaideep Gaandhie.vcf\"" }] },
+    { "source": "/assets/gaurav-sethi.vcf", "headers": [{ "key": "Content-Disposition", "value": "inline; filename=\"Gaurav Sethi.vcf\"" }] }
   ]
 }
