@@ -194,7 +194,11 @@ var EMAIL = '';
 
     if (ENDPOINT){
       btn.disabled = true; btn.textContent = 'Sending…';
-      fetch(ENDPOINT, {method:'POST', headers:{'Accept':'application/json','Content-Type':'application/json'}, body: JSON.stringify(Object.assign({_subject:'New partner enquiry: ' + d.company, _replyto:d.email, _template:'table'}, d))})
+      // Power Automate splits this subject on " | " to send the follow-up email, so keep the order and separator fixed.
+      var stage = {'Yes, actively looking':'Actively looking','Yes, in the next 6 to 12 months':'Next 6-12 months','Not right now, interested in partnering':'Partner'}[d.looking] || 'Not specified';
+      var clean = function(s){ return String(s || '').replace(/\|/g, '/').replace(/\s+/g, ' ').trim(); };
+      var subject = ['New partner enquiry', clean(d.company), clean(d.name), clean(d.email), stage].join(' | ');
+      fetch(ENDPOINT, {method:'POST', headers:{'Accept':'application/json','Content-Type':'application/json'}, body: JSON.stringify(Object.assign({_subject:subject, _replyto:d.email, _template:'table'}, d))})
         .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json().catch(function(){ return {}; }); })
         // FormSubmit answers 200 with success:"false" (e.g. before activation), so check the body too.
         .then(function(j){ if (j.success === false || j.success === 'false') throw new Error(j.message); finish(first); })
