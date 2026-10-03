@@ -26,8 +26,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-si
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;max-width:1120px;padding-top:env(safe-area-inset-top,0px)}
 .logo{display:inline-flex;border-radius:8px;padding:4px 6px}
 .logo img{height:40px;width:auto;display:block}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo{background:#fff}}
-:root[data-theme="dark"] .logo{background:#fff}
 .back{color:var(--slate);font-size:14px;font-weight:500;text-decoration:none;padding:8px 6px;border-radius:6px}
 .back:hover,.back:focus-visible{color:var(--ink);outline:2px solid var(--teal);outline-offset:2px}
 .hero{position:relative;color:#fff;background:#0F172A url(assets/skyline.jpg) 38% center/cover no-repeat}
@@ -91,7 +89,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px soli
 <body>
 <div class="ldr" aria-hidden="true"><i></i><i></i><i></i></div>
 <script>(function(){var l=document.currentScript.previousElementSibling,t0=Date.now();function hide(){if(l.classList.contains('done'))return;l.classList.add('done');setTimeout(function(){l.remove()},600)}function ready(){setTimeout(hide,Math.max(0,900-(Date.now()-t0)))}if(document.readyState==='complete')ready();else addEventListener('load',ready);setTimeout(hide,4000)})()</script>
-<header class="nav"><div class="wrap"><a class="logo" href="index.html"><img src="assets/logo.png" alt="Legion Realty Services — back to brochure"></a><a class="back" href="index.html">&larr; Back to brochure</a></div></header>
+<header class="nav"><div class="wrap"><a class="logo" href="index.html"><picture><source srcset="assets/logo-dark.png" media="(prefers-color-scheme: dark)"><img src="assets/logo.png" alt="Legion Realty Services — back to brochure"></picture></a><a class="back" href="index.html">&larr; Back to brochure</a></div></header>
 
 <main>
 <section class="hero"><div class="wrap">
