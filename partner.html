@@ -10,6 +10,21 @@
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <script>document.documentElement.classList.add('js')</script>
+<script>
+// Windows can't draw flag emoji, so load a flag-only font there (Twemoji, CC-BY 4.0, see assets/fonts).
+(function(){
+  try{
+    var c=document.createElement('canvas');c.width=c.height=1;var x=c.getContext('2d',{willReadFrequently:true});
+    x.textBaseline='top';x.font='100px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';x.scale(.01,.01);
+    var draws=function(t){var a=[];['#fff','#000'].forEach(function(f){x.clearRect(0,0,100,100);x.fillStyle=f;x.fillText(t,0,0);a.push(x.getImageData(0,0,1,1).data.join(','))});return a[0]===a[1]&&a[0].indexOf('0,0,0,')!==0};
+    if(draws('\uD83D\uDE0A')&&!draws('\uD83C\uDDE8\uD83C\uDDED')){
+      var s=document.createElement('style');
+      s.textContent='@font-face{font-family:"Twemoji Country Flags";unicode-range:U+1F1E6-1F1FF;src:url(assets/fonts/TwemojiCountryFlags.woff2) format("woff2");font-display:swap}';
+      document.head.appendChild(s);
+    }
+  }catch(e){}
+})();
+</script>
 <meta name="description" content="Tell Legion Realty Services about your client's India office requirement, or join as a referral partner.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&display=swap" rel="stylesheet">
@@ -52,6 +67,7 @@ legend{font-size:19px;font-weight:700;line-height:1.3;padding:0;margin-bottom:14
 .f label{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
 .f label i{font-style:normal;color:var(--muted);font-weight:400}
 .tel{display:grid;gap:8px}
+#dial{font-family:"Twemoji Country Flags",var(--f)}
 @media (min-width:480px){.tel{grid-template-columns:minmax(0,15rem) minmax(0,1fr)}}
 input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;min-height:46px}
 textarea{min-height:96px;resize:vertical}
