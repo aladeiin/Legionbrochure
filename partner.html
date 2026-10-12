@@ -233,10 +233,15 @@ var EMAIL = '';
       var clean = function(s){ return String(s || '').replace(/\|/g, '/').replace(/\s+/g, ' ').trim() || '-'; };
       var subject = ['New partner enquiry', clean(d.company), clean(d.name), clean(d.email), stage, clean(d.country), clean(d.phone)].join(' | ');
       fetch(ENDPOINT, {method:'POST', headers:{'Accept':'application/json','Content-Type':'application/json'}, body: JSON.stringify(Object.assign({_subject:subject, _replyto:d.email, _template:'table'}, d))})
-        .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json().catch(function(){ return {}; }); })
+        .then(function(r){ if (!r.ok) return r.text().then(function(t){ throw new Error('HTTP ' + r.status + ': ' + t.slice(0, 300)); }); return r.json().catch(function(){ return {}; }); })
         // FormSubmit answers 200 with success:"false" (e.g. before activation), so check the body too.
-        .then(function(j){ if (j.success === false || j.success === 'false') throw new Error(j.message); finish(first); })
-        .catch(function(){ status.textContent = 'Sorry, that didn’t go through. Please check your connection and try again.'; })
+        .then(function(j){ if (j.success === false || j.success === 'false') throw new Error(j.message || 'FormSubmit rejected the submission'); finish(first); })
+        .catch(function(err){
+          console.error('Partner form submit failed:', err);
+          status.textContent = 'Sorry, that didn’t go through. Please check your connection and try again.';
+          // ?debug=1 shows FormSubmit's own reason, for troubleshooting without browser dev tools.
+          if (/[?&]debug=1\b/.test(location.search)) status.textContent += ' [' + ((err && err.message) || err) + ']';
+        })
         .finally(function(){ btn.disabled = false; btn.textContent = 'Send to Legion'; });
     } else if (EMAIL){
       var body = Object.keys(d).map(function(k){ return k + ': ' + d[k]; }).join('\n');
